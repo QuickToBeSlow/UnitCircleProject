@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <canvas id = "Canvas" width = "1517" height = "695"></canvas>
+    <style>
+      input {
+      position: absolute;
+      }
+      textarea {
+      	position: absolute;
+      	resize: none;
+        width: 50px;
+        height:16px;
+        
+      }
+
+      .slider {
+        position: absolute;
+				transform:rotate(270deg); 
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      
+    var c = document.getElementById("Canvas");
+      c.width = window.innerWidth;
+      c.height = window.innerHeight;
+    var ctx = c.getContext("2d");
+      var timer = setInterval(function() {
+        //console.log(parseFloat(slider.value))
+        if (document.getElementById("chk1").checked === true) {
+          correctval = parseFloat(slider.value)/10; 
+          if (deg.value <= 0) {deg.value = parseFloat(deg.value)+360;}
+					if (deg.value >= 360) {deg.value -= 360;}
+					deg.value = correctval + deg.value--;
+        }
+        if (sin.value === "") {sin.value = 0;}
+        if (cos.value === "") {cos.value = 0;}
+        if (tan.value === "") {tan.value = 0;}
+        if (csc.value === "") {csc.value = 0;}
+        if (sec.value === "") {sec.value = 0;}
+        if (cot.value === "") {cot.value = 0;}
+        if (deg.value === "") {deg.value = 0;}
+        if (rad.value === "") {rad.value = 0;}
+        for (var x = 1; x < 10; x++) {
+        	if (sin.value === ""+0+x) {sin.value = parseFloat(x);}
+        	if (cos.value === ""+0+x) {cos.value = parseFloat(x);}
+        	if (tan.value === ""+0+x) {tan.value = parseFloat(x);}
+        	if (csc.value === ""+0+x) {csc.value = parseFloat(x);}
+        	if (sec.value === ""+0+x) {sec.value = parseFloat(x);}
+        	if (cot.value === ""+0+x) {cot.value = parseFloat(x);}
+          if (deg.value === ""+0+x) {deg.value = parseFloat(x);}
+          if (rad.value === ""+0+x) {rad.value = parseFloat(x);}
+        }
+        if (sin.value !== prevsin) {
+        change(sin.value);
+          prevsin = sin.value;
+        } else if (cos.value !== prevcos) {
+        change(cos.value);
+          prevcos = cos.value;
+        } else if (tan.value !== prevtan) {
+        change(tan.value);
+          prevtan = tan.value;
+        } else if (csc.value !== prevcsc) {
+        change(csc.value);
+          prevcsc = csc.value;
+        } else if (sec.value !== prevsec) {
+        change(sec.value);
+          prevsec = sec.value;
+        } else if (cot.value !== prevcot) {
+        change(cot.value);
+          prevcot = cot.value;
+        } else if (deg.value !== prevdeg) {
+        change(deg.value);
+          prevdeg = deg.value;
+        } else if (rad.value !== prevrad) {
+        change(rad.value);
+          prevrad = rad.value;
+        }
+      ctx.fillStyle = "rgb(196,196,196)";
+      ctx.fillRect(0,0,c.width,c.height);
+      ctx.beginPath();
+      ctx.strokeStyle = "rgb(0,0,0)";
+			ctx.ellipse(c.width/2, c.height/2, 100, 100, Math.PI / 4, 0, 2 * Math.PI);
+			ctx.stroke();
+      ctx.beginPath();
+        ctx.strokeStyle = "rgb(0,0,0)";
+      ctx.moveTo(c.width/2,c.height/2);
+      ctx.lineTo(c.width/2,c.height/2+100);
+      ctx.moveTo(c.width/2,c.height/2);
+      ctx.lineTo(c.width/2,c.height/2-100);
+      ctx.moveTo(c.width/2,c.height/2);
+      ctx.lineTo(c.width/2+100,c.height/2);
+      ctx.moveTo(c.width/2,c.height/2);
+      ctx.lineTo(c.width/2-100,c.height/2);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.strokeStyle = "rgb(255,64,0)";
+      ctx.moveTo(c.width/2,c.height/2);
+      ctx.lineTo(c.width/2+Math.cos(rad.value)*100,c.height/2);
+        ctx.moveTo(c.width/2+Math.cos(rad.value)*100,c.height/2);
+        ctx.lineTo(c.width/2+Math.cos(rad.value)*100,c.height/2-Math.sin(rad.value)*100);
+        ctx.moveTo(c.width/2,c.height/2);
+        ctx.lineTo(c.width/2+Math.cos(rad.value)*100,c.height/2-Math.sin(rad.value)*100);
+      ctx.stroke();
+        ctx.fillStyle = "rgb(16,16,16)";
+        ctx.fillText("Cosecant",c.width/2,c.height/2-170);
+        ctx.fillText("Secant",c.width/2+62,c.height/2-170);
+        ctx.fillText("Cotangent",c.width/2+110,c.height/2-170);
+      	ctx.fillText("Tangent",c.width/2-50,c.height/2-170);
+        ctx.fillText("Cosine",c.width/2-105,c.height/2-170);
+        ctx.fillText("Sine",c.width/2-152,c.height/2-170);
+        ctx.fillText("Degrees",c.width/2-50,c.height/2+130);
+        ctx.fillText("Radians",c.width/2+5,c.height/2+130);
+        ctx.fillText("Increment value:"+(slider1.value/10)+"",c.width/2-195,c.height/2-80);
+      },1000/30);
+      function change(newval) {
+        if (newval === deg.value) {newval = deg.value*Math.PI/180}
+      	if (newval !== sin.value) {sin.value = Math.sin(parseFloat(newval)); prevsin = sin.value}
+      	if (newval !== cos.value) {cos.value = Math.cos(parseFloat(newval)); prevcos = cos.value}
+      	if (newval !== tan.value) {tan.value = Math.tan(parseFloat(newval)); prevtan = tan.value}
+      	if (newval !== csc.value) {csc.value = 1/(Math.sin(parseFloat(newval))); prevcsc = csc.value}
+      	if (newval !== sec.value) {sec.value = 1/(Math.cos(parseFloat(newval))); prevsec = sec.value}
+      	if (newval !== cot.value) {cot.value = 1/(Math.tan(parseFloat(newval)));  prevcot = cot.value}
+        if (newval !== deg.value) {deg.value = newval*180/Math.PI;  prevdeg = deg.value}
+        if (newval !== rad.value) {rad.value = newval;  prevrad = rad.value}
+      }
+    </script>
+    <textarea id = "txtarea1" maxlength="15"></textarea>
+    <textarea id = "txtarea2" maxlength="15"></textarea>
+		<textarea id = "txtarea3" maxlength="15"></textarea>
+    <textarea id = "txtarea4" maxlength="15"></textarea>
+    <textarea id = "txtarea5" maxlength="15"></textarea>
+    <textarea id = "txtarea6" maxlength="15"></textarea>
+    <textarea id = "txtarea7" maxlength="15"></textarea>
+    <textarea id = "txtarea8" maxlength="15"></textarea>
+    <input id = "chk1" type ="checkbox">
+    <input id = "slider1" class = "slider" type ="range" min="-20" max = "20">
+    <script>
+      var deg = document.getElementById("txtarea7");
+      var rad = document.getElementById("txtarea8");
+      var sin = document.getElementById("txtarea3");
+      var cos = document.getElementById("txtarea2");
+      var tan = document.getElementById("txtarea1");
+      var csc = document.getElementById("txtarea4");
+      var sec = document.getElementById("txtarea5");
+      var cot = document.getElementById("txtarea6");
+      var slider = document.getElementById("slider1");
+      var prevsin = sin.value;
+      var prevcos = cos.value;
+      var prevtan = tan.value;
+      var prevcsc = csc.value;
+      var prevsec = sec.value;
+      var prevcot = cot.value;
+      var prevdeg = deg.value;
+      var prevrad = rad.value;
+      document.getElementById("txtarea3").style.left = ""+(c.width/2-160)+"px";
+      document.getElementById("txtarea3").style.top = ""+(c.height/2-150)+"px";
+      document.getElementById("txtarea2").style.left = ""+(c.width/2-105)+"px";
+      document.getElementById("txtarea2").style.top = ""+(c.height/2-150)+"px";
+      document.getElementById("txtarea1").style.left = ""+(c.width/2-50)+"px";
+      document.getElementById("txtarea1").style.top = ""+(c.height/2-150)+"px";
+      document.getElementById("txtarea4").style.left = ""+(c.width/2+5)+"px";
+      document.getElementById("txtarea4").style.top = ""+(c.height/2-150)+"px";
+      document.getElementById("txtarea5").style.left = ""+(c.width/2+60)+"px";
+      document.getElementById("txtarea5").style.top = ""+(c.height/2-150)+"px";
+      document.getElementById("txtarea6").style.left = ""+(c.width/2+115)+"px";
+      document.getElementById("txtarea6").style.top = ""+(c.height/2-150)+"px";
+      document.getElementById("txtarea7").style.left = ""+(c.width/2-50)+"px";
+      document.getElementById("txtarea7").style.top = ""+(c.height/2+150)+"px";
+      document.getElementById("txtarea8").style.left = ""+(c.width/2+5)+"px";
+      document.getElementById("txtarea8").style.top = ""+(c.height/2+150)+"px";
+      document.getElementById("chk1").style.top = ""+(c.height/2+10)+"px";
+      document.getElementById("chk1").style.left = ""+(c.width/2+150)+"px";
+      document.getElementById("slider1").style.top = ""+(c.height/2)+"px";
+      document.getElementById("slider1").style.left = ""+(c.width/2-220)+"px";
+      document.getElementById("slider1").style.width = "150px";
+      </script>
+  </body>
+</html>
