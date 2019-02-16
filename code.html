@@ -29,12 +29,15 @@
     var ctx = c.getContext("2d");
       var timer = setInterval(function() {
         //console.log(parseFloat(slider.value))
+					if (deg.value <= 0) {deg.value = parseFloat(deg.value)+360;}
+					if (deg.value >= 360) {deg.value -= 360;}
         if (document.getElementById("chk1").checked === true) {
           correctval = parseFloat(slider.value)/10; 
-          if (deg.value <= 0) {deg.value = parseFloat(deg.value)+360;}
-					if (deg.value >= 360) {deg.value -= 360;}
+
 					deg.value = correctval + deg.value--;
         }
+        if (sin.value > 1) {sin.value = 1; prevsin = 1;}
+        if (cos.value > 1) {cos.value = 1; prevcos = 1;}
         if (sin.value === "") {sin.value = 0;}
         if (cos.value === "") {cos.value = 0;}
         if (tan.value === "") {tan.value = 0;}
@@ -98,11 +101,11 @@
         ctx.beginPath();
         ctx.strokeStyle = "rgb(255,64,0)";
       ctx.moveTo(c.width/2,c.height/2);
-      ctx.lineTo(c.width/2+Math.cos(rad.value)*100,c.height/2);
-        ctx.moveTo(c.width/2+Math.cos(rad.value)*100,c.height/2);
-        ctx.lineTo(c.width/2+Math.cos(rad.value)*100,c.height/2-Math.sin(rad.value)*100);
+      ctx.lineTo(c.width/2+cos.value*100,c.height/2);
+        ctx.moveTo(c.width/2+cos.value*100,c.height/2);
+        ctx.lineTo(c.width/2+cos.value*100,c.height/2-sin.value*100);
         ctx.moveTo(c.width/2,c.height/2);
-        ctx.lineTo(c.width/2+Math.cos(rad.value)*100,c.height/2-Math.sin(rad.value)*100);
+        ctx.lineTo(c.width/2+cos.value*100,c.height/2-sin.value*100);
       ctx.stroke();
         ctx.fillStyle = "rgb(16,16,16)";
         ctx.fillText("Cosecant",c.width/2,c.height/2-170);
@@ -116,15 +119,22 @@
         ctx.fillText("Increment value:"+(slider1.value/10)+"",c.width/2-195,c.height/2-80);
       },1000/30);
       function change(newval) {
-        if (newval === deg.value) {newval = deg.value*Math.PI/180}
+        if (newval === sin.value && deg.value !== "0") {deg.value = (Math.asin(sin.value)*180/Math.PI); prevsin = sin.value; newval = deg.value;}
+        else if (newval === cos.value && deg.value !== "0") {deg.value = (Math.acos(cos.value)*180/Math.PI); prevcos = cos.value; newval = deg.value;}
+        else if (newval === csc.value && deg.value !== "0") {deg.value = 1/(Math.asin(csc.value)*180/Math.PI); prevcsc = csc.value; newval = deg.value;}
+        else if (newval === sec.value && deg.value !== "0") {deg.value = 1/(Math.acos(sec.value)*180/Math.PI); prevsec = sec.value; newval = deg.value;}
+        
+        if (newval === deg.value) {newval = deg.value*Math.PI/180;}
+        if (newval !== deg.value) {deg.value = newval*180/Math.PI; prevdeg = deg.value}
       	if (newval !== sin.value) {sin.value = Math.sin(parseFloat(newval)); prevsin = sin.value}
       	if (newval !== cos.value) {cos.value = Math.cos(parseFloat(newval)); prevcos = cos.value}
       	if (newval !== tan.value) {tan.value = Math.tan(parseFloat(newval)); prevtan = tan.value}
       	if (newval !== csc.value) {csc.value = 1/(Math.sin(parseFloat(newval))); prevcsc = csc.value}
       	if (newval !== sec.value) {sec.value = 1/(Math.cos(parseFloat(newval))); prevsec = sec.value}
       	if (newval !== cot.value) {cot.value = 1/(Math.tan(parseFloat(newval)));  prevcot = cot.value}
-        if (newval !== deg.value) {deg.value = newval*180/Math.PI;  prevdeg = deg.value}
         if (newval !== rad.value) {rad.value = newval;  prevrad = rad.value}
+        //if (cos.value <= 6.123233995736766e-17 && cos.value !== 0) {cos.value = 0; prevcos.value = 0;}
+        //if (sin.value <= 6.123233995736766e-17 && sin.value !== 0) {sin.value = 0; prevsin.value = 0;}
       }
     </script>
     <textarea id = "txtarea1" maxlength="15"></textarea>
